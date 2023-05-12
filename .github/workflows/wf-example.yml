@@ -5,6 +5,10 @@ on: [push]
 permissions:
   contents: write
   checks: write
+  packages: write
+
+env:
+  REGISTRY: "ghcr.io"
 
 jobs:
   build:
@@ -36,3 +40,11 @@ jobs:
         name: JAVA Junit Tests            # Name of the check run which will be created
         path: 'test-results/**/*.xml'   # Path to test results
         reporter: java-junit        # Format of test results
+
+    - name: Save compiled artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app
+        path: target
+        retention-days: 1
+        
